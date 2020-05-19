@@ -58,6 +58,7 @@ type GitHubPayload struct {
 	Before     string         `json:"before"`
 	Created    bool           `json:"created"`
 	Ref        string         `json:"ref"`
+	RefType    string         `json:"ref_type"`
 	Deleted    bool           `json:"deleted"`
 	After      string         `json:"after"`
 	HeadCommit GitHubCommit   `json:"head_commit"`

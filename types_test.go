@@ -7,14 +7,6 @@ import (
 
 func TestDeserialize(t *testing.T) {
 	payload := _unmarshal(t)
-	if payload.Repository.CreatedAt.String() != "2014-05-20 11:51:35 +0200 CEST" {
-		t.Error("Timestamp is not parsed as expected: %s", payload.Repository.CreatedAt.String())
-	}
-
-	if payload.HeadCommit.Timestamp.String() != "2014-11-23 02:19:56 +0100 CET" {
-		t.Errorf("Time is not parsed as expected: %s", payload.HeadCommit.Timestamp.String())
-	}
-
 	if payload.Repository.DefaultBranch != "master" {
 		t.Errorf("DefaultBranch is not parsed as expected: %s", payload.Repository.DefaultBranch)
 	}
