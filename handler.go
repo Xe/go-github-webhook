@@ -55,7 +55,7 @@ func Handler(secret string, fn WebhookHandler) http.Handler {
 		// Get payload
 		payload := GitHubPayload{}
 		if err := json.Unmarshal(body, &payload); err != nil {
-			_fail(fmt.Errorf("Could not deserialize payload"))
+			_fail(fmt.Errorf("github: could not deserialize payload: %v", err))
 			return
 		}
 
