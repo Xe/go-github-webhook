@@ -103,7 +103,7 @@ func fail(w http.ResponseWriter, event string, err error) {
 	render(w, PayloadPong{
 		Ok:    false,
 		Event: event,
-		Error: err.Error(),
+		Error: err,
 	})
 }
 
