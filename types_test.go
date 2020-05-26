@@ -16,8 +16,8 @@ func TestDeserialize(t *testing.T) {
 	}
 }
 
-func _unmarshal(t *testing.T) GitHubPayload {
-	payload := GitHubPayload{}
+func _unmarshal(t *testing.T) Payload {
+	var payload Payload
 	if err := json.Unmarshal([]byte(jsonPayload), &payload); err != nil {
 		t.Error(err)
 	}
@@ -136,9 +136,9 @@ const jsonPayload string = `
 		"notifications_url": "https://api.github.com/repos/GitbookIO/documentation/notifications{?since,all,participating}",
 		"labels_url": "https://api.github.com/repos/GitbookIO/documentation/labels{/name}",
 		"releases_url": "https://api.github.com/repos/GitbookIO/documentation/releases{/id}",
-		"created_at": 1400579495,
+		"created_at": "2014-11-22T23:40:39Z",
 		"updated_at": "2014-11-22T23:50:39Z",
-		"pushed_at": 1416705597,
+		"pushed_at": "2014-11-22T23:50:39Z",
 		"git_url": "git://github.com/GitbookIO/documentation.git",
 		"ssh_url": "git@github.com:GitbookIO/documentation.git",
 		"clone_url": "https://github.com/GitbookIO/documentation.git",

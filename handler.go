@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-type WebhookHandler func(eventname string, payload *GitHubPayload, req *http.Request) error
+type WebhookHandler func(eventname string, payload *Payload, req *http.Request) error
 
 func Handler(secret string, fn WebhookHandler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
@@ -53,7 +53,7 @@ func Handler(secret string, fn WebhookHandler) http.Handler {
 		}
 
 		// Get payload
-		payload := GitHubPayload{}
+		var payload Payload
 		if err := json.Unmarshal(body, &payload); err != nil {
 			_fail(fmt.Errorf("github: could not deserialize payload: %v", err))
 			return
