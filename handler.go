@@ -1,11 +1,15 @@
 package github
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"within.website/ln"
+	"within.website/ln/opname"
 )
 
 type WebhookHandler func(eventname string, payload *Payload, req *http.Request) error
@@ -16,12 +20,14 @@ func Handler(secret string, fn WebhookHandler) http.Handler {
 		delivery := req.Header.Get("x-github-delivery")
 		signature := req.Header.Get("x-hub-signature")
 
+		ctx := opname.With(req.Context(), "github-webhook.handler")
+
 		// Utility funcs
 		_fail := func(err error) {
-			fail(w, event, err)
+			fail(ctx, w, event, err)
 		}
 		_succeed := func() {
-			succeed(w, event)
+			succeed(ctx, w, event)
 		}
 
 		// Ensure headers are all there
@@ -42,6 +48,8 @@ func Handler(secret string, fn WebhookHandler) http.Handler {
 			_fail(err)
 			return
 		}
+
+		fmt.Println(string(body))
 
 		// Validate payload (only when secret is provided)
 		if secret != "" {
@@ -91,14 +99,16 @@ func validePayloadSignature(secret, signatureHeader string, body []byte) error {
 	return nil
 }
 
-func succeed(w http.ResponseWriter, event string) {
+func succeed(ctx context.Context, w http.ResponseWriter, event string) {
+	ln.Log(ctx, ln.Info("success"))
 	render(w, PayloadPong{
 		Ok:    true,
 		Event: event,
 	})
 }
 
-func fail(w http.ResponseWriter, event string, err error) {
+func fail(ctx context.Context, w http.ResponseWriter, event string, err error) {
+	ln.Error(ctx, err)
 	w.WriteHeader(500)
 	render(w, PayloadPong{
 		Ok:    false,
