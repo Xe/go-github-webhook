@@ -113,7 +113,7 @@ func fail(ctx context.Context, w http.ResponseWriter, event string, err error) {
 	render(w, PayloadPong{
 		Ok:    false,
 		Event: event,
-		Error: err,
+		Error: err.Error(),
 	})
 }
 

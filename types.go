@@ -96,7 +96,7 @@ type Sender struct {
 type PayloadPong struct {
 	Ok    bool   `json:"ok"`
 	Event string `json:"event"`
-	Error error  `json:"error,omitempty"`
+	Error string `json:"error,omitempty"`
 }
 
 type Payload struct {
